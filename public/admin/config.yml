@@ -1,0 +1,122 @@
+backend:
+  name: git-gateway
+  branch: main
+media_folder: public/images
+public_folder: images
+publish_mode: editorial_workflow
+collections:
+  - name: 'posts'
+    label: 'Posts'
+    label_singular: 'Post'
+    folder: '_content/posts'
+    create: true
+    delete: false
+    preview_path: '{{fields.category}}/{{slug}}'
+    fields:
+      - name: 'title'
+        label: 'Title'
+        widget: 'string'
+      - name: 'published_at'
+        label: 'Published At'
+        widget: 'datetime'
+        format: 'LLLL'
+        date_format: 'dddd, MMMM D, YYYY'
+        time_format: 'h:mm a'
+      - label: "Featured Image"
+        name: "thumbnail"
+        widget: "image"
+        media_folder: /public/images/posts/{{ slug }}
+        choose_url: true
+        allow_multiple: false
+      - name: 'author'
+        label: 'Author'
+        widget: 'relation'
+        collection: 'authors'
+        search_fields: ['title', 'slug']
+        value_field: '{{slug}}'
+        display_fields: ['title', 'slug']
+      - name: 'category'
+        label: 'Category'
+        widget: 'relation'
+        collection: 'categories'
+        search_fields: ['title', 'slug']
+        value_field: '{{slug}}'
+        display_fields: ['title', 'slug']
+      - name: 'tags'
+        label: 'Tags'
+        widget: 'relation'
+        collection: 'tags'
+        multiple: true
+        search_fields: ['title', 'slug']
+        value_field: '{{slug}}'
+        display_fields: ['title', 'slug']
+      - name: 'excerpt'
+        label: 'Excerpt'
+        widget: 'text'
+      - name: 'body'
+        label: 'Body'
+        widget: 'markdown'
+        buttons: ['bold', 'italic', 'code', 'link', 'heading-two', 'heading-three', 'heading-four', 'heading-five', 'heading-six', 'quote', 'bulleted-list', 'numbered-list']
+        sanitize_preview: true
+  - name: 'categories'
+    label: 'Categories'
+    label_singular: 'Category'
+    folder: '_content/categories'
+    create: true
+    delete: false
+    preview_path: '{{slug}}'
+    fields:
+      - name: 'title'
+        label: 'Name'
+        widget: 'string'
+      - name: 'body'
+        label: 'Body'
+        widget: 'markdown'
+        buttons: ['bold', 'italic', 'code', 'link', 'heading-two', 'heading-three', 'heading-four', 'heading-five', 'heading-six', 'quote', 'bulleted-list', 'numbered-list']
+        sanitize_preview: true
+  - name: 'tags'
+    label: 'Tags'
+    label_singular: 'Tag'
+    folder: '_content/tags'
+    create: true
+    delete: false
+    preview_path: 'tags/{{slug}}'
+    fields:
+      - name: 'title'
+        label: 'Name'
+        widget: 'string'
+      - name: 'body'
+        label: 'Body'
+        widget: 'markdown'
+        buttons: ['bold', 'italic', 'code', 'link', 'heading-two', 'heading-three', 'heading-four', 'heading-five', 'heading-six', 'quote', 'bulleted-list', 'numbered-list']
+        sanitize_preview: true
+  - name: 'authors'
+    label: 'Authors'
+    label_singular: 'Author'
+    folder: '_content/authors'
+    create: true
+    delete: false
+    preview_path: 'authors/{{slug}}'
+    fields:
+      - name: 'title'
+        label: 'Name'
+        widget: 'string'
+      - name: 'twitter'
+        required: false
+        label: 'Twitter Handle'
+      - label: "Profile Image"
+        name: "image"
+        widget: "image"
+        media_folder: /public/images/authors/{{ slug }}
+        choose_url: true
+        allow_multiple: false
+      - name: 'short_bio'
+        required: false
+        label: 'Short Bio'
+        widget: 'text'
+      - name: 'body'
+        label: 'Bio'
+        widget: 'markdown'
+        buttons: ['bold', 'italic', 'code', 'link', 'heading-two', 'heading-three', 'heading-four', 'heading-five', 'heading-six', 'quote', 'bulleted-list', 'numbered-list']
+        sanitize_preview: true
+
